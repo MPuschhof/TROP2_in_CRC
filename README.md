@@ -5,5 +5,8 @@ Metastatic colorectal cancer (CRC) is a leading cause of cancer-related death dr
 
 ## Data access
 
+Raw and processed data objects have been made available here through arrayExpress / European Nucleotide Archive (ENA) under the following accession numbers: CRC cohort tissue-seq (E-MTAB-16583) and PDOX-seq (E-MTAB-16585); SG treatment of subcutaneous tumours (E-MTAB-16433); time course of SG treatment of liver metastasis (currently being deposited), time course of SG treatment of PDOs in vitro (E-MTAB-16843); time course of FOLFIRI treatment of PDOs (E-MTAB-16836); MDO-derived tumors VAKPS and VKPN (E-MTAB-16835).
+
 ## Publication
 
+Vaquero, Georgakopoulos, Puschhof *et al.* (submitted, 2026). TROP2 targeting reveals therapy-driven cell state dynamics and vulnerabilities in colorectal cancer.
