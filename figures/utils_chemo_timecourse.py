@@ -1,13 +1,7 @@
-import os
 import pandas as pd
-import scanpy as sc
-from pathlib import Path
 # import genelist
 import matplotlib.pyplot as plt
 import numpy as np
-
-import utils
-import utils_genelist as genelist
 
 import matplotlib.cm as cm
 import matplotlib.colors as mcolors
@@ -30,30 +24,6 @@ blues = [mcolors.to_hex(cmap(x)) for x in np.linspace(0.9, 0.4, 4)]
 colors_HTO_maxID = ylorrd + [purple] + blues
 
 color_code = {
-    'treatment': {
-        'order': ['drug', 'drug_cont', 'drug_release'],
-        'colors': {
-            'drug': ylorrd[3],
-            'drug_cont': "#8e44ad",
-            'drug_release': blues[1],
-        } 
-    },
-    'treatment_binary': { # 2026-01-12
-        'order': ['treatment', 'release'],
-        'colors': {
-            # get related but distinct colors: darker than sandybrown
-            'treatment': 'peru',
-            'release': 'peachpuff',
-        } 
-    },
-    'treatment_categ': {
-        'order': ['none', 'chemo', 'release'],
-        'colors': {
-            'none': 'lightgrey',
-            'chemo': 'sandybrown',
-            'release': 'peachpuff',
-        }   
-    },
     'time': {
         'order': order_time,
         'colors': dict(zip(order_time, colors_HTO_maxID))
