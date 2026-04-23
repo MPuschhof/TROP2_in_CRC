@@ -5,14 +5,15 @@ Metastatic colorectal cancer (CRC) remains a leading cause of cancer-related mor
 
 ## To do code repository
 
-- [] Complete Figure 1
-- [] Complete Figure 3
-- [] Complete Figure 4
-- [] Complete Figure S01
-- [] Complete Figure S02
-- [] Complete Figure S07
-- [] Complete Figure S10
-- [] Get data from repositories
+- [] Complete Figure 1: missing pseudobulk analysis (h)
+- [] Complete Figure 3: missing fix arrayExpress of both datasets and palantir analysis (n-r) 
+- [] Complete Figure 4: missing palantir analysis (l-u)
+- [] Complete Figure S01: missing R-based TCGA analysis (a-d)
+- [] Complete Figure S02: missing d-g including pbulk analysis
+- [] Complete Figure S07: fix arrayExpress (all), csv saving (c, d, h, i, m, m+test, p) palantir (e-f and n-o), GSEA incl pseudobulk (p)
+- [] Complete Figure S10: LM3 including pbulk analysis
+- [x] Pull data from public repositories
+- [] Bug fixing data retrieval
 
 ## Data access
 
