@@ -11,11 +11,17 @@ import sys
 from pathlib import Path
 import session_info
 
-# Setting data path
-dir_data = Path(f"{os.getcwd()}/../data_arrayExpress")
 
+# ---------------------------------------------------------------------
+# Project paths
+# ---------------------------------------------------------------------
 
-# # Local modules used throughout
-# module_path = os.path.abspath('../src')
-# if module_path not in sys.path:
-#     sys.path.append(module_path)
+dir_figures = Path(__file__).resolve().parent
+dir_repo = dir_figures.parent
+
+dir_data = dir_repo / "data_arrayExpress"
+dir_utils = dir_repo / "utils"
+
+# Make repo-level utils folder importable
+if str(dir_utils) not in sys.path:
+    sys.path.append(str(dir_utils))
