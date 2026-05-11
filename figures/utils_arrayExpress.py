@@ -314,6 +314,10 @@ def infer_study_config_from_files(
         auto_blacklist=auto_blacklist,
     )
 
+    assigned_files = []
+    blacklisted_files = []
+    unassigned_files = []
+
     grouped: Dict[str, Dict[str, str]] = {}
 
     for p in accession_dir.rglob("*"):
@@ -323,13 +327,16 @@ def infer_study_config_from_files(
         relpath = str(p.relative_to(accession_dir))
 
         if _is_blacklisted(relpath, effective_blacklist):
+            blacklisted_files.append(relpath)
             continue
 
         parsed = _strip_known_suffix(p.name)
         if parsed is None:
+            unassigned_files.append(relpath)
             continue
 
         prefix, role = parsed
+        assigned_files.append(relpath)
 
         grouped.setdefault(prefix, {})
 
@@ -351,20 +358,23 @@ def infer_study_config_from_files(
     available_prefixes = sorted(grouped.keys())
 
     if verbose:
-        if len(available_prefixes) == 1:
-            p = available_prefixes[0]
+        n_total = len(assigned_files) + len(blacklisted_files) + len(unassigned_files)
+
+        if len(unassigned_files) == 0:
             print(
-                f"Inferred 1 dataset representation: "
-                f"{_dataset_choice_label(p)} (full prefix: {p})"
+                f"      File assignment summary: {len(assigned_files)} file(s) assigned to dataset "
+                f"representations, {len(blacklisted_files)} blacklisted, no unassigned files."
             )
         else:
             print(
-                f"Inferred {len(available_prefixes)} dataset representations:\n - "
-                + "\n - ".join(
-                    f"{_dataset_choice_label(p)} (full prefix: {p})"
-                    for p in available_prefixes
-                )
+                f"      File assignment summary: {len(assigned_files)} file(s) assigned to dataset "
+                f"representations, {len(blacklisted_files)} blacklisted, "
+                f"{len(unassigned_files)} unassigned."
             )
+            print("      Unassigned files:")
+            for f in sorted(unassigned_files):
+                print(f"        - {f}")
+
 
     if dataset is None:
         if len(grouped) > 1:
@@ -597,22 +607,6 @@ def assemble_anndata_from_inferred_files(
         )
     obs = obs.loc[counts.index].copy()
 
-    # if features.index.equals(counts.columns):
-    #     var = features.copy()
-    #     var.index = var.index.astype(str)
-    # else:
-    #     first_col = features.iloc[:, 0].astype(str)
-    #     if pd.Index(first_col).equals(counts.columns):
-    #         var = features.copy()
-    #         var.index = pd.Index(first_col, name="gene")
-    #     else:
-    #         raise ValueError(
-    #             "Could not align features file to matrix columns.\n"
-    #             f"First matrix columns: {list(counts.columns[:5])}\n"
-    #             f"First features index: {list(features.index[:5])}\n"
-    #             f"First features first column: {list(first_col[:5])}"
-    #         )
-    
     if features.index.equals(counts.columns):
         var = features.copy()
         var.index = var.index.astype(str)
@@ -728,7 +722,10 @@ def get_public_study_adata(
     if verbose:
         print(f"[setup] Download directory: {download_dir_rel}")
 
-    already_present = study_dir.exists() and any(study_dir.iterdir())
+    already_present = (
+        study_dir.exists()
+        and any(p.is_file() for p in study_dir.rglob("*"))
+    )
 
     if verbose:
         if already_present:
@@ -739,11 +736,14 @@ def get_public_study_adata(
             print(f"[1/3] No local files found for {accession}.")
             print("      Downloading accession files.")
 
-    accession_dir = ensure_accession_downloaded(
-        accession=accession,
-        download_dir=download_dir,
-        force=force_download,
-    )
+    if already_present and not force_download:
+        accession_dir = study_dir
+    else:
+        accession_dir = ensure_accession_downloaded(
+            accession=accession,
+            download_dir=download_dir,
+            force=force_download,
+        )
 
     if verbose:
         print(f"[2/3] Inferring dataset structure in: {download_dir_rel / study_dir_rel}")
