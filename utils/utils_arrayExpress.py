@@ -280,6 +280,18 @@ def _strip_known_suffix(filename: str) -> Optional[tuple[str, str]]:
     return None
 
 
+def _suffix_priority_for_role(path: str, role: str) -> int:
+    """
+    Return priority of the suffix matched by path for a given role.
+    Lower value = higher priority based on _SUFFIX_MAP order.
+    """
+    filename = Path(path).name
+    for i, suffix in enumerate(_SUFFIX_MAP[role]):
+        if filename.endswith(suffix):
+            return i
+    return len(_SUFFIX_MAP[role])
+
+
 def _dataset_choice_label(prefix: str) -> str:
     """
     Human-friendly short label derived from the last underscore-separated token.
@@ -341,11 +353,16 @@ def infer_study_config_from_files(
         grouped.setdefault(prefix, {})
 
         if role in grouped[prefix]:
-            raise ValueError(
-                f"Multiple files found for dataset '{prefix}' and role '{role}':\n"
-                f" - {grouped[prefix][role]}\n"
-                f" - {relpath}"
-            )
+            existing_relpath = grouped[prefix][role]
+
+            existing_priority = _suffix_priority_for_role(existing_relpath, role)
+            new_priority = _suffix_priority_for_role(relpath, role)
+
+            # Lower number = higher priority in _SUFFIX_MAP
+            if new_priority < existing_priority:
+                grouped[prefix][role] = relpath
+
+            continue
 
         grouped[prefix][role] = relpath
 
