@@ -1,8 +1,16 @@
-# TROP2 in CRC
+# TROP2 targeting reveals therapy-driven cell state dynamics in colorectal cancer
 
-**TROP2 targeting reveals therapy-driven cell state transitions in human colorectal cancer**
+In this repository, we aim to reproduce the key figures and analyses from our study "TROP2 targeting reveals therapy-driven cell state dynamics in colorectal cancer" published at *Nature* (available [here](https://www.nature.com/articles/s41586-026-10705-2)).
+
+## Publication
 
 Metastatic colorectal cancer (CRC) remains a leading cause of cancer-related mortality and is driven by pronounced tumour cell plasticity. Here we identify the transmembrane glycoprotein trophoblast cell-surface antigen 2 (TROP2) as a marker of poor-prognosis CRC associated with WNT-low, fetal-like tumour cell states linked to metastasis and therapy resistance. Functional analyses demonstrate that TROP2⁺ cells exhibit context-dependent stem-like capacity and the ability to initiate metastatic outgrowth. Given that these detrimental tumour states converge on the cell-surface antigen TROP2, we explored therapeutic targeting of this cell population using clinically relevant TROP2-directed antibody-drug conjugates (ADCs). Time-resolved analyses reveal therapy-associated dynamics in tumour cell state composition between WNT-high LGR5⁺ intestinal stem cell programs and WNT-low TROP2⁺ fetal-like states. Conventional chemotherapy promotes the induction of TROP2-expressing cells, whereas TROP2-ADCs selectively target these populations and remodel the tumour cell-state landscape. Exploiting this plasticity, combined chemotherapy and TROP2 targeting enhances antitumour efficacy in patient-derived models. Together, our findings identify TROP2 as a therapeutic vulnerability of poor-prognosis CRC and highlight the importance of targeting tumour cell states to improve therapeutic efficacy and overcome adaptive resistance in advanced disease.
+
+<p align="center">
+  <img src="figures/GA_model_260701.png" alt="Cell state dynamics in CRC under therapy" width="600">
+</p>
+
+
 
 ## Data access
 
@@ -29,7 +37,6 @@ In addition, the session information is provided at the end of each notebook.
 
 Recreating the analysis from the processed data is done within minutes for each notebook as the results of memory-heavy computation steps has been deposited to arrayExpress. Where required, loading magic-imputed counts can take several minutes on its own and might require up to 32 GB of memory. 
 
-
 ## Publication
 
-Vaquero, Georgakopoulos, Puschhof *et al.* (submitted, 2026). TROP2 targeting reveals therapy-driven cell state dynamics in colorectal cancer.
+Vaquero, Georgakopoulos, Puschhof *et al.* TROP2 targeting reveals therapy-driven cell state dynamics in colorectal cancer. *Nature* (2026) [Link](https://www.nature.com/articles/s41586-026-10705-2)
